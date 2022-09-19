@@ -1,0 +1,67 @@
+package ar.edu.unlp.info.oo1.balanzaElectronica;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import ar.edu.unlp.info.oo1.Ejercicio3_Presupuesto.Item;
+
+public class Balanza extends Object{
+	
+//*	private int cantidadDeProductos;
+	private double precioTotal;
+	private double pesoTotal;
+	private ArrayList<Producto> productos = new ArrayList<Producto>();
+
+  /*public Balanza() {		
+		precioTotal = 0;
+		pesoTotal   = 0;	
+	}*/
+	
+	public Ticket emitirTicket() {
+		return new Ticket(cantidadDeProductos, pesoTotal, precioTotal);
+	}
+	
+	public List<Producto> getProductos() {
+	//*	if(!productos.isEmpty()) {
+	 //*   for(Producto i:productos){	    	
+	 //*       return productos.get(i);
+	 //*   }
+		
+		return this.productos;
+		
+	}
+	
+	public int getCantidadDeProductos() {
+		int aux;
+		if(productos.isEmpty()){
+			aux = 0;
+		}	
+		else
+			aux = productos.size();		
+		return aux;
+	}
+	
+	public double getPesoTotal() {		
+		return pesoTotal;
+	}
+	
+	public double getPrecioTotal() {
+		return precioTotal;
+	}
+
+	public void ponerEnCero() { /*Vacia la lista de productos*/
+		productos.clear();
+	//*	precioTotal = 0;
+	//*	pesoTotal   = 0;
+		
+	}
+	
+	public void agregarProducto(Producto unProducto) {
+		productos.add(unProducto);
+		//*cantidadDeProductos ++;
+		//*precioTotal += unProducto.getPrecio();
+		//*pesoTotal += unProducto.getPeso();
+	}
+	
+	
+}

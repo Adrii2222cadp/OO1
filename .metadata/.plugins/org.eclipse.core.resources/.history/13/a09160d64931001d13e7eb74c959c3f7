@@ -1,0 +1,42 @@
+package ar.edu.unlp.info.oo1.Ejercicio4_FigurasYCuerpos;
+
+public class Cuerpo3D {
+	
+	private double altura;
+	private Cuadrado caraBasal;
+	private Circulo caraBasal2;
+	private double volumen;
+	private double superficieExterior;
+	
+	
+	public double getAltura() {
+		return altura;
+	}
+	public void setAltura(double altura) {
+		this.altura = altura;
+	}
+	public double getCaraBasal() {
+		return caraBasal;
+	}
+	public void setCaraBasal(double caraBasal) {
+		this.caraBasal = caraBasal;
+	}
+	public double getVolumen() {
+		return volumen;
+	}
+	public void setVolumen(double volumen) {
+		this.volumen = volumen;
+	}
+	public double getSuperficieExterior() {
+		return superficieExterior;
+	}
+	public void setSuperficieExterior(double superficieExterior) {
+		this.superficieExterior = superficieExterior;
+	}
+
+	
+	
+	
+	
+	
+}

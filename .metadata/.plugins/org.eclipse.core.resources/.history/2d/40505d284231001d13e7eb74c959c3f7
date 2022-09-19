@@ -1,0 +1,46 @@
+package ar.edu.unlp.info.oo1.Ejercicio4_FigurasYCuerpos;
+
+import java.util.regex.Matcher;
+
+public class Circulo {
+	
+	private double radio;
+	private double diametro;
+	private String colorDeLinea;    
+	
+	
+	
+	public void setDiametro(double unDiametro) {
+		diametro = unDiametro;
+	}
+	
+	public double getDiametro() {
+		return diametro;
+	}
+	
+	public double getRadio() {
+		return radio;
+	}
+
+	public void setRadio(double radio) {
+		this.radio = radio;
+	}
+	
+	
+	public double getPerimetro() {
+		return this.getDiametro() * Math.PI;
+	}
+	
+	public double getArea() {
+		return Math.PI * (this.radio * this.radio); 
+	}
+	
+	public String getColorDeLinea() {
+		return colorDeLinea;
+	}
+	
+	public void setColorDeLinea(String unColorDeLinea) {
+		colorDeLinea =  unColorDeLinea;
+	}
+
+}

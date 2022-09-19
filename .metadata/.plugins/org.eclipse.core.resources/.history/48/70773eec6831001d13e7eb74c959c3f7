@@ -1,0 +1,10 @@
+package ar.edu.unlp.info.oo1.Ejercicio4_FigurasYCuerpos;
+
+public class Cilindro extends Cuerpo3D{
+	
+		
+	public double getAltura() {
+		return altura;
+		
+	}
+}

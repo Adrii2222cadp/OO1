@@ -1,0 +1,12 @@
+package ar.edu.unlp.info.oo1.Ejercicio4_FigurasYCuerpos;
+
+public abstract class Figura {
+
+	private double altura;
+	
+	public Figura(double unaAltura) {
+		this.altura = unaAltura; 
+	}
+		
+
+}

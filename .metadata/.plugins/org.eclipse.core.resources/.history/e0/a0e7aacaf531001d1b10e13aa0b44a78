@@ -1,0 +1,19 @@
+package ar.edu.unlp.info.oo1.Ejercicio4_FigurasYCuerpos;
+
+public class Cilindro {
+	
+		
+	private double volumen;
+	private double altura;
+	
+	public double getVolumen() {
+		
+		
+		return volumen;
+	}
+	
+	public double getAltura(){
+		return altura;
+		}
+	
+}
