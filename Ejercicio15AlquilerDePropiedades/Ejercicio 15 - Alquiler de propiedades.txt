@@ -1,0 +1,80 @@
+@startuml
+
+title Classes - Ejercicio 15 Alquiler de Propiedades
+
+class AlquilerDePropiedades {
+  + registrarUsuario(nombre:String, direccion:String, dni:iteger):Usuario
+  + registrarPropiedad(nombre:String, descripcion:String, direccion:String, precioPorNoche:real, propietario:Usuario):Propiedad
+  + buscarPropiedadesDisponibles(periodo:DateLapse): Propiedad[*]
+  + reservar(propiedad:Propiedad, periodo:DateLapse, usuario:Usuario):Reserva
+  + eliminarReserva(reserva:Reserva)
+  + obtenerReservasDeUsuario(usuario:Usuario):Reserva[*]
+  + calcularIngresosDePropietario(propietario:Usuario, periodo:DateLapse):Real
+}
+
+class Propiedad{
+	- nombre:String
+	- descripcion: String
+	- direccion: String
+	- precioPorNoche: Real
+	
+	+ <<create>> Propiedad(nombre:String, descripcion:String, direccion:String, precioPorNoche:Real, propietario:Usuario)
+	
+	+ disponibilidad(periodo:DateLapse):Boolean
+	+ agregarReserva(reserva:Reserva)
+	+ eliminarReserva(reserva:Reserva)
+	+ calcularIngresosPropiedad(periodo:DateLapse):Real
+	+ calcularPrecio(dias:Integer):Real
+}
+
+class Usuario{
+	- nombre:String
+	- dni:Integer
+	- direccion:String
+	
+	+ <<create>> Usuario(nombre:String, dni:Integer, direccion:String)
+	
+	+ agregarReserva(reserva:Reserva)
+	+ eliminarReserva(reserva:Reserva)
+	
+	+ agregarPropiedad(propiedad:Propiedad)
+	+ eliminarPropiedad(propiedad:Propiedad)
+	
+	+ calcularIngresosDePropietario(periodo:DateLapse):Real
+}
+
+class Reserva{
+	+ <<create>> Reserva(periodo:DateLapse, propiedad:Propiedad)
+	
+	+ calcularPrecioReserva():Real
+	+ overlaps(otro:DateLapse):Boolean
+	
+	+ inicioPosteriorFechaActual():Boolean
+}
+
+class DateLapse{
+	- from:Date
+	- to:Date
+	
+	+ sizeInDays():Integer
+	+ includesDate(otro:date):Boolean
+	+ overlaps(otro:DateLapse):Boolean
+	+ laterFrom():Boolean
+	+ equalFrom(fecha:Date):Boolean
+	+ equalTo(fecha:Dato):Boolean
+}
+
+
+AlquilerDePropiedades --> "0..*" Usuario: usuarios
+AlquilerDePropiedades --> "0..*" Propiedad: propiedades
+
+Usuario --> "0..*" Propiedad: propiedades
+Usuario --> "0..*" Reserva: reservas
+
+Propiedad --> "1" Usuario: propietario
+Propiedad --> "0..*" Reserva: reservas
+
+Reserva --> "1" Propiedad: propiedad
+Reserva --> "1" DateLapse: periodo
+
+@enduml

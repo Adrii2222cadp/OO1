@@ -1,6 +1,0 @@
-package ar.edu.unlp.info.oo1.Ejercicio4_FigurasYCuerpos;
-
-public interface Figura_Interface {
-	double getArea();	
-	double getPerimetro();
-}

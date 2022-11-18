@@ -78,10 +78,12 @@ public class Mamifero {
 		}
 	}
 	
-	public boolean getTieneComoAncestroA(Mamifero unMamifero) {		
-		return ((this.padre == unMamifero || this.madre== unMamifero)
+	/*tiene como ancestro a*/
+	public boolean tieneComoAncestroA(Mamifero unMamifero){
+		return ((this.padre == unMamifero || this.madre == unMamifero) /*si es la madre o el padre*/
+				|| (this.padre != null && this.padre.tieneComoAncestroA(unMamifero)) /*si se cumple que no es null llama*/
+				|| (this.madre != null && this.madre.tieneComoAncestroA(unMamifero))); /*si se cumple que no es null llama*/  
 	}
-	
 	/*getters y setters*/
 	public String getIdentificador() {
 		return identificador;
