@@ -1,7 +1,6 @@
 package ar.edu.unlp.objetos.uno.Ejerciocio17_FacturaciondeLlamadas;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.time.LocalDateTime;
 
@@ -9,99 +8,78 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class SistemaTest {
-
-	private Sistema sistema;
-	
-	private PersonaFisica emisorF1;
-	private PersonaFisica emisorF2;
-	private PersonaFisica emisorF3;
-	private PersonaFisica reseptorF4;
-
-	private PersonaJuridica emisorJ1;
-	private PersonaJuridica emisorJ2;
-	private PersonaJuridica emisorJ3;
-	private PersonaJuridica reseptorJ4;
-	
-	private LocalDateTime comienzo;
-	private LocalDateTime fin;
+	private Sistema sistema, sistemaSinRegistros;
+	private PersonaJuridica personaConLlamadas, personaSinLlamadas;
+	private PersonaFisica personaConLlamadas2, personaSinLlamadas2;
 	
 	@BeforeEach
-	/*acá instancio las variables*/
-	private void setUp() throws Exception{
-	
+	public void setUp(){
+		sistemaSinRegistros = new Sistema();
 		sistema = new Sistema();
-		/*cargamos los números en el sistema*/
-		this.sistema.agregarNumeroDisponible("4762150");
-		this.sistema.agregarNumeroDisponible("4762149");
-		this.sistema.agregarNumeroDisponible("4762148");
-		this.sistema.agregarNumeroDisponible("6666666");
 		
-		this.sistema.agregarNumeroDisponible("4644270");
-		this.sistema.agregarNumeroDisponible("4762169");
-		this.sistema.agregarNumeroDisponible("4762168");
-		this.sistema.agregarNumeroDisponible("5555555");
+		/*cargamos numeros a nuestro sistema*/
+		sistema.AgregarNumeroDisponible("123");
+		sistema.AgregarNumeroDisponible("456");
+		sistema.AgregarNumeroDisponible("789");
+		sistema.AgregarNumeroDisponible("1011");
+		
+		/*registramos personas en nuestro sistema*/
+		
+		/*personas juridicas*/
+		personaConLlamadas = sistema.darDeAltaPersonaJurica("greta","tolosa", 1, "1"); /*num = 123*/
+		personaSinLlamadas = sistema.darDeAltaPersonaJurica("adrian", "berisso", 1, "1"); /*num = 456*/
+	
+		/*personas fisicas*/
+		personaConLlamadas2 = sistema.darDeAltaPersonaFisica("clemente", "tandil", 123); /*num = 789*/
+		personaSinLlamadas2 = sistema.darDeAltaPersonaFisica("emanuel", "florencio varela", 123); /*num = 101*/
 	}
+	
 	@Test
-	public void darDeAltaPersonaFisica(){
-		emisorF1  = this.sistema.darDeAltaPersonaFisica("Adrian", "176 n°2657", 18251258);
-		emisorF2  = this.sistema.darDeAltaPersonaFisica("Edy", "28 n°4628", 18251258);
-		emisorF3  = this.sistema.darDeAltaPersonaFisica("Alejandro", "29 n°4648", 18251258);
-		assertEquals(3, sistema.getPersonas().size());
-		assertEquals(5, sistema.getNumeros().size());
-		reseptorF4= this.sistema.darDeAltaPersonaFisica("Ely", "55 n°4628", 18251258);
-		assertEquals(4, sistema.getNumeros().size());	
-		assertEquals(4, sistema.getPersonas().size());
+	public void altaDePersonasTest() {
+		/*testeamos un sistema sin registros y uno con*/
+		assertEquals(0,sistemaSinRegistros.getPersonas().size());
+		assertEquals(0,sistemaSinRegistros.getNumeros().size());
+		assertEquals(4,sistema.getPersonas().size());
 	}
+	
 	@Test
-	public void darDeAltaPersonajuridica() {
-		emisorJ1 = this.sistema.darDeAltaPersonaJuridica("Fasdas", "23 n° 4625", 30709756, "srl");
-		emisorJ2 = this.sistema.darDeAltaPersonaJuridica("Caldos", "22 n° 4625", 30709756, "srl");
-		assertEquals(2, sistema.getPersonas().size());
-		assertEquals(6, sistema.getNumeros().size());
-		emisorJ3 = this.sistema.darDeAltaPersonaJuridica("Bioservicios", "33 n° 4625", 30709756, "SA");
-		reseptorJ4 = this.sistema.darDeAltaPersonaJuridica("Tecnologias", "43 n° 4625", 30709756, "SA");
-		assertEquals(4, sistema.getPersonas().size());
-		assertEquals(4, sistema.getNumeros().size());
-	}
-	public void registrarLlamadaLocal() {
-		this.emisorF1  = this.sistema.darDeAltaPersonaFisica("Adrian", "176 n°2657", 18251258);
-		this.reseptorF4 = this.sistema.darDeAltaPersonaFisica("Edy", "28 n°4628", 18251258);
-		this.sistema.registrarLlamadaLocal(LocalDateTime.of(2022, 10, 10, 14, 10), 62, "4762150", "4762149");
-														   /*año, mes,dia,hora,minuto ,*/
-		assertEquals(62, emisorF1.calcularMonto(comienzo, comienzo));
-	}
-	public void registrarLlamadaInterUrbana() {
-		this.emisorJ1 = this.sistema.darDeAltaPersonaJuridica("Fasdas", "23 n° 4625", 30709756, "srl");
-		this.emisorJ2 = this.sistema.darDeAltaPersonaJuridica("Caldos", "22 n° 4625", 30709756, "srl");
-		this.sistema.registrarLlamadaInterUrbana(LocalDateTime.of(2022, 11, 10, 12, 15), 25, "4762150", "4762149", 99);
-		assertEquals(396, emisorJ1.calcularCosto(LocalDateTime.of(2022, 11, 10, 12, 15), LocalDateTime.of(2022, 11, 15, 12, 45)));
+	public void registrarLlamadasTest() {
+		/*registramos que las llamadas se registren adecuadamente*/
 		
-	/*	(99*2)+5=198*2=396*/
-	}
-	public void registrarLlamadaInternacional() {
-		this.emisorJ1 = this.sistema.darDeAltaPersonaJuridica("Fasdas", "23 n° 4625", 30709756, "srl");
-		this.emisorJ2 = this.sistema.darDeAltaPersonaJuridica("Caldos", "22 n° 4625", 30709756, "srl");
-		this.sistema.registrarLlamadaInternacional(comienzo, 35, "4762150", "4762149", "Berisso", "Qatar");
-		assertEquals();
+		/*registro de llamadas a persona juridica*/
+		sistema.registrarLlamadaLocal(null, 0, personaConLlamadas.getNroTelefono(), personaSinLlamadas.getNroTelefono());
+		sistema.registrarLlamadaInterUrbana(null, 0, personaConLlamadas.getNroTelefono(), personaSinLlamadas.getNroTelefono(), 0);
+		sistema.registrarLlamadaInternacional(null, 0, personaConLlamadas.getNroTelefono(), personaSinLlamadas.getNroTelefono(), null, null);
 		
-		/*(35*)  */
+		/*registro de llamadas a personas fisicas*/
+		sistema.registrarLlamadaLocal(null, 0, personaConLlamadas2.getNroTelefono(), personaSinLlamadas2.getNroTelefono());
+		sistema.registrarLlamadaInterUrbana(null, 0, personaConLlamadas2.getNroTelefono(), personaSinLlamadas2.getNroTelefono(), 0);
+		sistema.registrarLlamadaInternacional(null, 0, personaConLlamadas2.getNroTelefono(), personaSinLlamadas2.getNroTelefono(), null, null);
+	
+		assertEquals(0,personaSinLlamadas.getLlamadas().size());
+		assertEquals(0,personaSinLlamadas2.getLlamadas().size());
+		
+		assertEquals(3,personaConLlamadas.getLlamadas().size());
+		assertEquals(3,personaConLlamadas2.getLlamadas().size());
 	}
+	
+	@Test 
+	public void facturarLlamadasTest() {
+		/*registro de llamadas a persona juridica*/
+		sistema.registrarLlamadaLocal(LocalDateTime.of(2022, 10, 10, 10, 00), 10, personaConLlamadas.getNroTelefono(), personaSinLlamadas.getNroTelefono()); /*vale 10*/
+		sistema.registrarLlamadaInterUrbana(LocalDateTime.of(2022, 10, 10, 10, 00), 10, personaConLlamadas.getNroTelefono(), personaSinLlamadas.getNroTelefono(), 45); /*vale 25*/
+		sistema.registrarLlamadaInternacional(LocalDateTime.of(2022, 10, 10, 9, 0), 10, personaConLlamadas.getNroTelefono(), personaSinLlamadas.getNroTelefono(), null, null); ; /*vale 40*/
+		
+		assertEquals(0, sistema.facturarLlamada(personaSinLlamadas, LocalDateTime.of(2022, 10, 10, 10, 00), LocalDateTime.of(2022, 10, 11, 10, 00)).getMonto());
+		assertEquals(75, sistema.facturarLlamada(personaConLlamadas, LocalDateTime.of(2022, 10, 6, 10, 00), LocalDateTime.of(2022, 10, 11, 10, 00)).getMonto());
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
+		/*registro de llamadas a personas fisicas (se le aplica el 10 de descuento)*/
+		sistema.registrarLlamadaLocal(LocalDateTime.of(2022, 10, 10, 10, 00), 10, personaConLlamadas2.getNroTelefono(), personaSinLlamadas2.getNroTelefono());
+		sistema.registrarLlamadaInterUrbana(LocalDateTime.of(2022, 10, 10, 10, 00), 10, personaConLlamadas2.getNroTelefono(), personaSinLlamadas2.getNroTelefono(), 45);
+		sistema.registrarLlamadaInternacional(LocalDateTime.of(2022, 10, 10, 9, 0), 10, personaConLlamadas2.getNroTelefono(), personaSinLlamadas2.getNroTelefono(), null, null);
+		
+		assertEquals(0, sistema.facturarLlamada(personaSinLlamadas2, LocalDateTime.of(2022, 10, 10, 10, 00), LocalDateTime.of(2022, 10, 11, 10, 00)).getMonto());
+		assertEquals(67.5, sistema.facturarLlamada(personaConLlamadas2, LocalDateTime.of(2022, 10, 6, 10, 00), LocalDateTime.of(2022, 10, 11, 10, 00)).getMonto());		
+	}
 }

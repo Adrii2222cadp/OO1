@@ -16,7 +16,7 @@ public class Sistema {
 		this.numeros.add(unNumero);
 	}
 	
-	public String asignarNumero() {
+	protected String asignarNumero() {
 		String numero = numeros.get(0);
 		numeros.remove(numero);
 		return numero;

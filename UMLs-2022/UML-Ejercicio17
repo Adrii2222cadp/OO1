@@ -1,0 +1,99 @@
+@startuml
+title Classes - Ejercicio 17 Facturacion de Llamadas
+
+class Sistema{
+-numeros[*]
++agregarNumeroDisponible(numero:integer)
++darAltaPersonaFisica(nombre:String,direccion:integer,nroTelefono:integer,
+dni:integer):Persona
++darAltaPersonaJuridica(nombre:String,direccion:integer,nroTelefono:integer,
+cuit:integer,tipo:String):Persona
++registrarLlamadaLocal(comienzo:Date,duracion:integer,emisor:integer,
+receptor:integer):LLamadaLocal
++registrarLLamadaInternacional(comienzo:Date,duracion:integer,emisor:integer,
+receptor:integer,paisOrigen:String,
+paisDestino:integer):LlamadaInternacional
++registrarLlamadaInterUrbana(comienzo: Date, duracion: integer,emisor: integer, 
+receptor: , distancia: integer):Llamada
++facturarLlamada(cliente: Persona): Factura
+}
+class Persona <<abstract>> {
+-nombre:String
+-direccion:String
+-nroTelefono:integer
++registrarLlamadaLocal(comienzo:Date,duracion:integer,emisor:integer,receptor:
+integer):LLamadaLocal
++registrarLLamadaInterurbana(comienzo:Date,duracion:integer,emisor:integer,
+receptor:integer,
+distancia:integer):LlamadaInterurbana
++registrarLLamadaInternacional(comienzo:Date,duracion:integer,emisor:integer,
+receptor:integer,
+paisOrigen:String,paisDestino:integer):LlamadaInternacional
++facturarLlamadas(periodo:dateLapse):Factura
++calcularMontoTotal(periodo:dateLapse):Real
+}
+class PersonaJuridica{
+-cuit:integer
+-tipo:String
++ <<create>> PersonaJuridica(nombre:String,direccion:integer,
+nroTelefono:integer,cuit:integer,tipo:String)
++ calcularMonto():Real
+}
+class PersonaFisica{
+-dni:integer
++ <<create>> PersonaFisica(nombre:String,direccion:integer,
+nroTelefono:integer,dni:integer)
++ calcularMonto():Real
+}
+class Factura {
+-periodo: DateLapse
+-fecha: Date
+-montoTotal: Real
++<<create>> Factura(cliente: Persona, periodo: DateLapse,
+ montoTotal: Real)
+}
+class Llamada <<abstract>> {
+-emisor: integer
+-receptor: integer
+-comienzo: Date
+-duracion: integer
++calcularCosto(): Real
++<<create>> Llamada(emisor: integer, receptor: integer; comienzo: 
+Date, durecion: integer)
+}
+
+
+class LlamadaLocal{
++<<create >> LlamadaLocal(emisor: integer, receptor: integer,
+comienzo: Date, duracion: integer)
++calcularCosto(): Real
+}
+
+class LlamadaInterurbana{
+-distancia: integer
++<<create>> LlamadaLocal(emisor: integer, 
+ receptor: integer, comienzo:
+ Date, duracion: integer, distancia: integer)
++calcularCosto(): Real 
+}
+
+class LlamadaInternacional{
+-paisOrigen: String
+-paisDestino: String
++<<create>> LlamadaLocal(emisor: integer, receptor: integer,
+ comienzo: Date, duracion: integer, distancia: integer, 
+paisOrigen: String, paisDestino: String)
++calcularCosto(): Real 
+}
+
+Sistema --> "0..*" Persona: clientes
+
+Persona -down-> "0..*" Llamada: llamadas
+Persona --> "0..*" Factura: facturas
+Factura <-down- "1" Persona: clientes
+Persona <- PersonaJuridica
+PersonaFisica -> Persona
+LlamadaLocal -up-> Llamada
+LlamadaInterurbana -up-> Llamada
+LlamadaInternacional -up-> Llamada
+@enduml

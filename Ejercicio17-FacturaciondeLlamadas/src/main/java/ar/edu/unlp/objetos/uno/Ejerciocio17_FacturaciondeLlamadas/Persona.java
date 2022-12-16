@@ -62,7 +62,7 @@ public abstract class Persona {
 		return factura;
 	}
 	
-	public double calcularMontoTotal(LocalDateTime comienzo, LocalDateTime fin) {
+	private double calcularMontoTotal(LocalDateTime comienzo, LocalDateTime fin) {
 		return this.llamadas.stream().filter(l -> l.lapso(comienzo, fin)).mapToDouble(l -> l.calcularCosto()).sum();
 	}	
 }
