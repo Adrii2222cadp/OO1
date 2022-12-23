@@ -23,6 +23,6 @@ public abstract class Contrato {
 	
 	abstract boolean estaVencido(); 
 		
-	abstract int calcularAnio();
+	abstract int calcularAños();
 	
 }

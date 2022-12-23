@@ -53,6 +53,7 @@
 	</section>
 	<section name="Maven2ProjectWizardArchifactPage">
 		<list key="package">
+			<item value="ar.edu.unlp.objetos.uno.SegundoRecuperatorio"/>
 			<item value="ar.edu.unlp.objetos.uno"/>
 			<item value="ar.edu.unlp.objetos.uno.Ejercicio18_LiquidacionDeHaberes"/>
 			<item value="ar.edu.unlp.objetos.uno.Ejerciocio17_FacturaciondeLlamadas"/>
@@ -61,6 +62,7 @@
 			<item value="ar.edu.unlp.objetos.uno"/>
 		</list>
 		<list key="artifactId">
+			<item value="SegundoRecuperatorio"/>
 			<item value="Ejercicio18-LiquidacionDeHaberes"/>
 			<item value="Ejerciocio17-FacturaciondeLlamadas"/>
 		</list>

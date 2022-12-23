@@ -29,8 +29,8 @@ public class ContratoPlanta extends Contrato{
 	}
 
 	@Override
-	int calcularAnio() {
+	int calcularAños() {
 		
-		return (int) this.getFechaInicio().until(LocalDate.now()), ChronoUnit.YEARS);
+		return (int) this.getFechaInicio().until(LocalDate.now(),ChronoUnit.YEARS);
 	}
 }
